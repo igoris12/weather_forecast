@@ -17,6 +17,7 @@ class CreateRecommendationsTable extends Migration
             $table->id();
              $table->string('name', 64);
              $table->string('sku', 64);
+             $table->string('type', 25);
              $table->integer('price');
             $table->timestamps();
         });

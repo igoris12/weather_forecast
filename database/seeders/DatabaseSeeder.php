@@ -22,13 +22,21 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123'),
         ]);
+
+        $types = ['clear', 'isolated-clouds', 'scattered-clouds', 'overcast', 'light-rain',
+        'moderate-rain','heavy-rain', 'sleet','light-snow','moderate-snow','heavy-snow','fog','na',
+         'clear', 'isolated-clouds', 'scattered-clouds', 'overcast', 'light-rain','moderate-rain','heavy-rain',
+          'sleet','light-snow','moderate-snow','heavy-snow','fog','na'];
             foreach(range(1, 26) as $i) {
                 DB::table('recommendations')->insert([
                 'name' => $faker->word,
                 'sku' => $faker->numberBetween($min = 1000, $max = 9000),
                 'price' => $faker->numberBetween($min = 10, $max = 50),
+                'type' => $types[$i-1],
 
             ]);
         }
     }
 }
+
+
