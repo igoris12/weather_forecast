@@ -6,12 +6,16 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Recommendations list</div>
-                    <form action="{{ route('recommendation.index') }}" method="post">
+                    <form action="{{ route('recommendation.index') }}" method="get">
                         <fieldset>
                             <legend>Filter</legend>
                             <div class="block">
                                 <div class="form-group">
-                                    <input type="text" name="town_name">
+                                    <select name="town_name">
+                                        <option value="vilnius">Vilnius</option>
+                                        <option value="kaunas">Kaunas</option>
+                                    </select>
+
                                     <small class="form-text text-muted">Select town</small>
                                 </div>
                             </div>
@@ -27,6 +31,7 @@
                             @foreach ($recommendations as $recommendation)
                                 <li class="list-group-item">
                                     <div class="listBlock">
+                                        <h4> {{ $town }}</h4>
                                         <details>
                                             <summary>
                                                 {{ $recommendation->name }} ID: {{ $recommendation->id }}
