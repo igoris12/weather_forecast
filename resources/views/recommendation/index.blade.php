@@ -6,24 +6,17 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Recommendations list</div>
-                    <form action="{{ route('recommendation.index') }}" method="get">
+                    <form action="{{ route('recommendation.index') }}" method="post">
                         <fieldset>
                             <legend>Filter</legend>
                             <div class="block">
                                 <div class="form-group">
-                                    <select class="form-control" name="recommendation_id">
-                                        <option value="0" disabled selected>Select recommendation</option>
-                                        <option value="0">S1e</option>
-                                        <option value="0">Sel1rse</option>
-                                        <option value="0">Sele2rse</option>
-                                    </select>
-                                    <small class="form-text text-muted">Select recommendation from the
-                                        list.</small>
+                                    <input type="text" name="town_name">
+                                    <small class="form-text text-muted">Select town</small>
                                 </div>
                             </div>
                             <div class="block">
-                                <button type="submit" class="btn btn-secondary" name="filter"
-                                    value="recommendation">Filter</button>
+                                <button type="submit" class="btn btn-secondary">Get</button>
                             </div>
                         </fieldset>
                     </form>
