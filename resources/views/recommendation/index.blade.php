@@ -8,7 +8,7 @@
                     <div class="card-header">Recommendations list</div>
                     <form action="{{ route('recommendation.index') }}" method="get">
                         <fieldset>
-                            <legend>Filter</legend>
+                            <legend>Select town</legend>
                             <div class="block">
                                 <div class="form-group">
                                     <select name="town_name">
@@ -33,31 +33,23 @@
                         </fieldset>
                     </form>
                     <div class="card-body">
-
-
                         <ul class="list-group">
                             @foreach ($weather_forecast as $forecastItem)
                                 <li class="list-group-item">
                                     <div class="listBlock">
                                         <details>
                                             <summary>
-                                                City: {{ $town }}
-                                                Recommendations
+                                                City: {{ $town }}<h6><b>Date:</b>
+                                                    {{ substr($forecastItem['forecastTimeUtc'], 0, 10) }}</h6>
                                             </summary>
                                             <div class="listBlock__content">
                                                 <h4><b>weather_forecast:</b>
                                                     {{ $forecastItem['conditionCode'] }}
                                                 </h4>
                                             </div>
-                                            <div class="listBlock__content">
-                                                <h4><b>Date:</b> {{ substr($forecastItem['forecastTimeUtc'], 0, 10) }}
-                                                </h4>
-                                            </div>
-                                            <p>Recommendations</p>
                                             @foreach ($recommendations as $recommendationItem)
-
                                                 @if ($recommendationItem->type == $forecastItem['conditionCode'])
-                                                    <fieldset>
+                                                    <div class="item">
                                                         <div class="listBlock__content">
                                                             <h4><b>id:</b> {{ $recommendationItem->id }} </h4>
                                                         </div>
@@ -68,20 +60,18 @@
                                                             <h4><b>sku:</b> {{ $recommendationItem->sku }}</h4>
                                                         </div>
                                                         <div class="listBlock__content">
-                                                            <h4><b>Price:</b> {{ $recommendationItem->price }},
-                                                                <?= rand(0, 9) . rand(0, 9) ?>Eur.</h4>
+                                                            <h4><b>Price:</b>
+                                                                {{ $recommendationItem->price }},<?= rand(0, 9) . rand(0, 9) ?>Eur.
+                                                            </h4>
                                                         </div>
+                                                    </div>
                                                 @endif
-                                                </fieldset>
                                             @endforeach
-
                                         </details>
                                     </div>
                                 </li>
                             @endforeach
                         </ul>
-
-
                     </div>
                 </div>
             </div>
