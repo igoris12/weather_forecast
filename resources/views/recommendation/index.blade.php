@@ -28,23 +28,27 @@
 
 
                         <ul class="list-group">
-                            @foreach ($recommendations as $recommendation)
+                            @foreach ($weather_forecast as $item)
                                 <li class="list-group-item">
                                     <div class="listBlock">
-                                        <h4> {{ $town }}</h4>
                                         <details>
                                             <summary>
-                                                {{ $recommendation->name }} ID: {{ $recommendation->id }}
+                                                City: {{ $town }}
+                                                Recommendations
                                             </summary>
                                             <div class="listBlock__content">
-                                                <h4><b>Sku:</b> {{ $recommendation->sku }}</h4>
+                                                <h4><b>weather_forecast:</b>
+                                                    {{ $item['conditionCode'] }}
+                                                </h4>
                                             </div>
                                             <div class="listBlock__content">
+                                                <h4><b>Date:</b> {{ substr($item['forecastTimeUtc'], 0, 10) }}</h4>
+                                            </div>
+                                            {{-- <div class="listBlock__content">
                                                 <h4><b>Price:</b> {{ $recommendation->price }},
                                                     <?= rand(0, 9) . rand(0, 9) ?>Eur.</h4>
-                                            </div>
+                                            </div> --}}
                                         </details>
-
                                     </div>
                                 </li>
                             @endforeach

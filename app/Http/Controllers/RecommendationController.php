@@ -24,56 +24,78 @@ class RecommendationController extends Controller
      */
     public function index(Request $request)
     {   
-        $town = $request->town_name;
-        $url = 'https://api.meteo.lt/v1/places/'.$town.'/forecasts/long-term';
-        $data = cache()->remember('forecast-data', 60, function($url) {
-            return Http::get($url)->json();
-        });
+     
+        $url = 'https://api.meteo.lt/v1/places/'.$request->town_name.'/forecasts/long-term';
+        
+        $data = Http::get($url)->json();
+        
+        $town = $data['place']['name'];
+        $weather_forecast = [];
 
-        // echo '<pre>';
-       print_r($data['forecastTimestamps']);  
+     
+    
+        $h = date("H");
 
+        if ((int)$h > 20) {
+            $h = (int)$h - 23;
+        }
 
-        $town_name = $data['place']['name'];
-        $forecast =$data['forecastTimestamps'];
+        if ((int)$h+3 < 10) {
+            $h = '0'.(int)$h+3;
+        }else {
+        $h =   (int)$h+3;
+        }
 
+        $dotay = date("Y-m-d $h:00:00");
+
+        foreach($data['forecastTimestamps'] as $item) {
+            if ($item['forecastTimeUtc'] == $dotay) {
+                $weather_forecast[] = $item;
+                break;
+            }
+        }
+
+        $weather_forecast[] = $data['forecastTimestamps'][28];
+        $weather_forecast[] = $data['forecastTimestamps'][52];
+
+   // echo '<pre>';
     
         
-        
-    
-        // dd($data);
+        // print_r($data);    
 
+        // echo '<br>';
+        // print_r($weather_forecast);     
 
 
 
         $recommendations = Recommendation::where('type', 'clear' )->orderBy('name', 'desc')->get();
-        return view('recommendation.index', ['recommendations' => $recommendations, 'town' => $town_name]);
+        return view('recommendation.index', ['recommendations' => $recommendations, 'town' => $town , 'weather_forecast' => $weather_forecast]);
     }
 
 
 
 
-     public function fromServer(string $town) : array
-    {
-        $curl = curl_init();
+    //  public function fromServer(string $town) : array
+    // {
+    //     $curl = curl_init();
 
-        curl_setopt($curl, CURLOPT_URL,'https://api.meteo.lt/v1/places/'.$request->town_name.'/forecasts/long-term');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    //     curl_setopt($curl, CURLOPT_URL,'https://api.meteo.lt/v1/places/'.$request->town_name.'/forecasts/long-term');
+    //     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
-        $answer = curl_exec($curl);
+    //     $answer = curl_exec($curl);
 
-        curl_close($curl);
+    //     curl_close($curl);
 
-        $data = json_decode($answer);
+    //     $data = json_decode($answer);
         
-        // $forecastance = $data->forecastance;
+    //     // $forecastance = $data->forecastance;
 
         
-        $recommendations = Recommendation::where('type', 'na' )->orderBy('name', 'desc')->get();
-        return view('recommendation.index', ['recommendations' => $recommendations]);
+    //     $recommendations = Recommendation::where('type', 'na' )->orderBy('name', 'desc')->get();
+    //     return view('recommendation.index', ['recommendations' => $recommendations]);
     
-        dd($data);
-        return [$data, time()];
-    }
+    //     dd($data);
+    //     return [$data, time()];
+    // }
 
 }
