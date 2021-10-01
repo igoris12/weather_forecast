@@ -24,52 +24,42 @@ class RecommendationController extends Controller
      */
     public function index(Request $request)
     {   
-     
-        $url = 'https://api.meteo.lt/v1/places/'.$request->town_name.'/forecasts/long-term';
-        
-        $data = Http::get($url)->json();
-        
-        $town = $data['place']['name'];
-        $weather_forecast = [];
+        if ($request->town_name) {
+            $url = 'https://api.meteo.lt/v1/places/'.$request->town_name.'/forecasts/long-term';
+            
+            $data = Http::get($url)->json();
+            
+            $town = $data['place']['name'];
+            $weather_forecast = [];
+            
+            $h = date("H");
 
-     
-    
-        $h = date("H");
-
-        if ((int)$h > 20) {
-            $h = (int)$h - 23;
-        }
-
-        if ((int)$h+3 < 10) {
-            $h = '0'.(int)$h+3;
-        }else {
-        $h =   (int)$h+3;
-        }
-
-        $dotay = date("Y-m-d $h:00:00");
-
-        foreach($data['forecastTimestamps'] as $item) {
-            if ($item['forecastTimeUtc'] == $dotay) {
-                $weather_forecast[] = $item;
-                break;
+            if ((int)$h > 20) {
+                $h = (int)$h - 23;
             }
+
+            if ((int)$h+3 < 10) {
+                $h = '0'.(int)$h+3;
+            }else {
+            $h =   (int)$h+3;
+            }
+
+            $dotay = date("Y-m-d $h:00:00");
+
+            foreach($data['forecastTimestamps'] as $item) {
+                if ($item['forecastTimeUtc'] == $dotay) {
+                    $weather_forecast[] = $item;
+                    break;
+                }
+            }
+
+            $weather_forecast[] = $data['forecastTimestamps'][28];
+            $weather_forecast[] = $data['forecastTimestamps'][52];  
+
+            $recommendations = Recommendation::all();
+            return view('recommendation.index', ['recommendations' => $recommendations, 'town' => $town , 'weather_forecast' => $weather_forecast]);
         }
-
-        $weather_forecast[] = $data['forecastTimestamps'][28];
-        $weather_forecast[] = $data['forecastTimestamps'][52];
-
-   // echo '<pre>';
-    
-        
-        // print_r($data);    
-
-        // echo '<br>';
-        // print_r($weather_forecast);     
-
-
-
-        $recommendations = Recommendation::where('type', 'clear' )->orderBy('name', 'desc')->get();
-        return view('recommendation.index', ['recommendations' => $recommendations, 'town' => $town , 'weather_forecast' => $weather_forecast]);
+         return view('recommendation.index', ['recommendations' => [], 'town' => '0' , 'weather_forecast' => []]);
     }
 
 

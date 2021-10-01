@@ -12,8 +12,16 @@
                             <div class="block">
                                 <div class="form-group">
                                     <select name="town_name">
-                                        <option value="vilnius">Vilnius</option>
+                                        <option value="0" disabled selected>Select town</option>
+                                        <option value="alytus">Alytus</option>
                                         <option value="kaunas">Kaunas</option>
+                                        <option value="klaipeda">Klaipėda</option>
+                                        <option value="panevezys">Panevėžys</option>
+                                        <option value="siauliai">Šiauliai</option>
+                                        <option value="vilnius">Vilnius</option>
+                                        <option value="marijampole">Marijampolė</option>
+                                        <option value="mazeikiai">Mažeikiai</option>
+                                        <option value="zarasai">Zarasai</option>
                                     </select>
 
                                     <small class="form-text text-muted">Select town</small>
@@ -28,7 +36,7 @@
 
 
                         <ul class="list-group">
-                            @foreach ($weather_forecast as $item)
+                            @foreach ($weather_forecast as $forecastItem)
                                 <li class="list-group-item">
                                     <div class="listBlock">
                                         <details>
@@ -38,16 +46,35 @@
                                             </summary>
                                             <div class="listBlock__content">
                                                 <h4><b>weather_forecast:</b>
-                                                    {{ $item['conditionCode'] }}
+                                                    {{ $forecastItem['conditionCode'] }}
                                                 </h4>
                                             </div>
                                             <div class="listBlock__content">
-                                                <h4><b>Date:</b> {{ substr($item['forecastTimeUtc'], 0, 10) }}</h4>
+                                                <h4><b>Date:</b> {{ substr($forecastItem['forecastTimeUtc'], 0, 10) }}
+                                                </h4>
                                             </div>
-                                            {{-- <div class="listBlock__content">
-                                                <h4><b>Price:</b> {{ $recommendation->price }},
-                                                    <?= rand(0, 9) . rand(0, 9) ?>Eur.</h4>
-                                            </div> --}}
+                                            <p>Recommendations</p>
+                                            @foreach ($recommendations as $recommendationItem)
+
+                                                @if ($recommendationItem->type == $forecastItem['conditionCode'])
+                                                    <fieldset>
+                                                        <div class="listBlock__content">
+                                                            <h4><b>id:</b> {{ $recommendationItem->id }} </h4>
+                                                        </div>
+                                                        <div class="listBlock__content">
+                                                            <h4><b>Name:</b> {{ $recommendationItem->name }} </h4>
+                                                        </div>
+                                                        <div class="listBlock__content">
+                                                            <h4><b>sku:</b> {{ $recommendationItem->sku }}</h4>
+                                                        </div>
+                                                        <div class="listBlock__content">
+                                                            <h4><b>Price:</b> {{ $recommendationItem->price }},
+                                                                <?= rand(0, 9) . rand(0, 9) ?>Eur.</h4>
+                                                        </div>
+                                                @endif
+                                                </fieldset>
+                                            @endforeach
+
                                         </details>
                                     </div>
                                 </li>
