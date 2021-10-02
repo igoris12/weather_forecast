@@ -7,6 +7,7 @@
                 <div class="card">
                     <div class="card-header">Recommendations list</div>
                     <form action="{{ route('recommendation.index') }}" method="get">
+                        <div><i><small>Data source is LHMT</small></i></div>
                         <fieldset>
                             <legend>Select town</legend>
                             <div class="block">
