@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Recommendation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Cache;
 
 
 define('VALID_CATCHE', 30);
@@ -28,7 +28,8 @@ class RecommendationController extends Controller
             $url = 'https://api.meteo.lt/v1/places/'.$request->town_name.'/forecasts/long-term';
             
             $data = Http::get($url)->json();
-            
+            Cache::put('weather_forecast', $data, now()->addMinutes(5));
+            $data = Cache::get('weather_forecast');
             $town = $data['place']['name'];
             $weather_forecast = [];
             
