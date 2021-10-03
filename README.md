@@ -45,15 +45,15 @@ migration and seeder<br>
 $ php artisan migrate:fresh<br>
 $ php artisan migrate:fresh --seed<br>
 
-link to project in web for now is not working and it is in progress.
-
-tools was used
-● PHP 8 version;
-● MySQL database;
-● Laravel framework;
-● Faker library for product data;
-● Host for now is not available;
-
-infor of weather was taken from 'LHMT' API.
-
-Usage examples you can pick one of the several towns to see recommended product for three days by the weather forecast.
+link to project in web for now is not working and it is in progress.<br>
+<br>
+tools was used<br>
+● PHP 8 version;<br>
+● MySQL database;<br>
+● Laravel framework;<br>
+● Faker library for product data;<br>
+● Host for now is not available;<br>
+<br>
+infor of weather was taken from 'LHMT' API.<br>
+<br>
+Usage examples you can pick one of the several towns to see recommended product for three days by the weather forecast.<br>
