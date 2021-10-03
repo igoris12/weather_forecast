@@ -44,3 +44,5 @@ and
 migration and seeder<br>
 $ php artisan migrate:fresh<br>
 $ php artisan migrate:fresh --seed<br>
+
+link to project in web for now is not working and it is in progress.
