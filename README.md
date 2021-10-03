@@ -46,3 +46,14 @@ $ php artisan migrate:fresh<br>
 $ php artisan migrate:fresh --seed<br>
 
 link to project in web for now is not working and it is in progress.
+
+tools was used
+● PHP 8 version;
+● MySQL database;
+● Laravel framework;
+● Faker library for product data;
+● Host for now is not available;
+
+infor of weather was taken from 'LHMT' API.
+
+Usage examples you can pick one of the several towns to see recommended product for three days by the weather forecast.
