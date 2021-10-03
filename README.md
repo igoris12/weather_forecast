@@ -12,14 +12,14 @@ and put folder from ZIP there.
 XAMPP control panel click on MySQL Admin
 then in phpmyadmin create new database with name (abeo_task).
 
-open folder<h1>weather_forecast-master</h1> in code editor and in terminal use command
-$ npm i
-$ composer install
-$ composer require vlucas/phpdotenv
-$ php artisan key:generate
-migration and seeder
-$ php artisan migrate:fresh
-$ php artisan migrate:fresh --seed
+open folder weather_forecast-master in code editor and in terminal use command
+$ npm i <br>
+$ composer install <br>
+$ composer require vlucas/phpdotenv <br>
+$ php artisan key:generate <br>
+migration and seeder <br>
+$ php artisan migrate:fresh <br>
+$ php artisan migrate:fresh --seed <br>
 
 then you will get new file .env.example rename it to .env
 next open file .env check that DB_DATABASE will be => abeo_task or if you used other name then use it.
