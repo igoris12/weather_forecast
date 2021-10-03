@@ -26,15 +26,15 @@ class RecommendationController extends Controller
     public function index(Request $request)
     {   
         $towns = ['alytus','kaunas','klaipeda','panevezys','siauliai','vilnius','marijampole','mazeikiai','zarasai'];
+
         $max = count($towns);
-        // dd( $max);
+
         $validator = Validator::make(
             $request->all(),
             [
                 'town_name' => [ 'integer', 'min:0', "max:$max"],
                 
             ]
-
         );
 
        if ($validator->fails()) {
