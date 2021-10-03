@@ -14,15 +14,15 @@
                                 <div class="form-group">
                                     <select name="town_name">
                                         <option value="0" disabled selected>Select town</option>
-                                        <option value="alytus">Alytus</option>
-                                        <option value="kaunas">Kaunas</option>
-                                        <option value="klaipeda">Klaipėda</option>
-                                        <option value="panevezys">Panevėžys</option>
-                                        <option value="siauliai">Šiauliai</option>
-                                        <option value="vilnius">Vilnius</option>
-                                        <option value="marijampole">Marijampolė</option>
-                                        <option value="mazeikiai">Mažeikiai</option>
-                                        <option value="zarasai">Zarasai</option>
+                                        <option value="1">Alytus</option>
+                                        <option value="2">Kaunas</option>
+                                        <option value="3">Klaipėda</option>
+                                        <option value="4">Panevėžys</option>
+                                        <option value="5">Šiauliai</option>
+                                        <option value="6">Vilnius</option>
+                                        <option value="7">Marijampolė</option>
+                                        <option value="8">Mažeikiai</option>
+                                        <option value="9">Zarasai</option>
                                     </select>
 
                                     <small class="form-text text-muted">Select town</small>

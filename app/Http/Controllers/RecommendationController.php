@@ -6,6 +6,7 @@ use App\Models\Recommendation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Validator;
 
 
 define('VALID_CATCHE', 30);
@@ -24,8 +25,25 @@ class RecommendationController extends Controller
      */
     public function index(Request $request)
     {   
+        $towns = ['alytus','kaunas','klaipeda','panevezys','siauliai','vilnius','marijampole','mazeikiai','zarasai'];
+        $max = count($towns);
+        // dd( $max);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'town_name' => [ 'integer', 'min:0', "max:$max"],
+                
+            ]
+
+        );
+
+       if ($validator->fails()) {
+           $request->flash();
+           return redirect()->back()->withErrors($validator);
+       }
+
         if ($request->town_name) {
-            $url = 'https://api.meteo.lt/v1/places/'.$request->town_name.'/forecasts/long-term';
+            $url = 'https://api.meteo.lt/v1/places/'.$towns[$request->town_name -1].'/forecasts/long-term';
             
             $data = Http::get($url)->json();
             Cache::put('weather_forecast', $data, now()->addMinutes(5));
@@ -62,31 +80,4 @@ class RecommendationController extends Controller
         }
          return view('recommendation.index', ['recommendations' => [], 'town' => '0' , 'weather_forecast' => []]);
     }
-
-
-
-
-    //  public function fromServer(string $town) : array
-    // {
-    //     $curl = curl_init();
-
-    //     curl_setopt($curl, CURLOPT_URL,'https://api.meteo.lt/v1/places/'.$request->town_name.'/forecasts/long-term');
-    //     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-    //     $answer = curl_exec($curl);
-
-    //     curl_close($curl);
-
-    //     $data = json_decode($answer);
-        
-    //     // $forecastance = $data->forecastance;
-
-        
-    //     $recommendations = Recommendation::where('type', 'na' )->orderBy('name', 'desc')->get();
-    //     return view('recommendation.index', ['recommendations' => $recommendations]);
-    
-    //     dd($data);
-    //     return [$data, time()];
-    // }
-
 }
