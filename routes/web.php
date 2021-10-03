@@ -18,7 +18,6 @@ use App\Http\Controllers\RecommendationController;
 
 Route::group(['prefix' => 'recommendations'], function(){
    Route::get('', [RecommendationController::class, 'index'])->name('recommendation.index');
-//    Route::get('create', [RecommendationController::class, 'create'])->name('recommendation.create');
   
 });
 
@@ -26,6 +25,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
